@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="10" failures="0" errors="0" time="0.0652552">
+    <testsuite name="src/performance.test.ts" timestamp="2025-09-27T16:42:53.951Z" hostname="jose" tests="10" failures="0" errors="0" skipped="0" time="0.0652552">
+        <testcase classname="src/performance.test.ts" name="measure &gt; should return success status and correct value for a simple function" time="0.0042534">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should handle functions that throw errors" time="0.0007144">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should handle functions that throw non-Error values" time="0.0003726">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should measure duration for async functions (even if not awaited)" time="0.0048196">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should work with functions returning undefined" time="0.0003631">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should measure duration accurately" time="0.0203177">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should handle functions that return a resolved Promise" time="0.0004293">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should handle functions that return a rejected Promise" time="0.0002779">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should handle async functions that throw synchronously" time="0.0001717">
+        </testcase>
+        <testcase classname="src/performance.test.ts" name="measure &gt; should measure duration for a function that returns a Promise after a delay" time="0.0308934">
+        </testcase>
+    </testsuite>
+</testsuites>
