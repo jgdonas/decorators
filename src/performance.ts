@@ -9,52 +9,60 @@ export type MeasuredFunctionResult<T> = Result & {
   };
 };
 
-const measure = <T extends AnyFunction>(fn: T): MeasuredFunctionResult<ReturnType<T>> => {
+// Overload signatures
+export function measure<T>(fn: () => T): MeasuredFunctionResult<T>;
+export function measure<T>(fn: () => Promise<T>): Promise<MeasuredFunctionResult<T>>;
+
+// Implementation
+export function measure<T>(fn: () => T | Promise<T>): MeasuredFunctionResult<T> | Promise<MeasuredFunctionResult<T>> {
   const start = performance.now();
 
-  const result: MeasuredFunctionResult<ReturnType<T>> = {
-    status: 'success',
-    message: 'Function executed successfully',
-    data: { value: null, duration: 0 },
+  const onError = (error: unknown, duration: number): MeasuredFunctionResult<T> => {
+    let message: string;
+
+    if (error instanceof Error && typeof error.message === 'string') {
+      message = error.message;
+    } else {
+      message = 'An error occurred during function execution';
+    }
+
+    return {
+      status: 'error',
+      message,
+      data: { value: null, duration },
+    };
   };
 
-  try {
-    result.data.value = fn() as ReturnType<T>;
-  } catch (error: unknown) {
-    result.status = 'error';
-    result.message = error instanceof Error ? error.message : 'An error occurred during function execution';
-  } finally {
-    const end = performance.now();
-    const duration = end - start;
-
-    result.data.duration = duration;
-  }
-
-  return result;
-};
-
-const measureAsync = async <T extends AnyFunction<Promise<unknown>>>(fn: T): Promise<MeasuredFunctionResult<Awaited<ReturnType<T>>>> => {
-  const start = performance.now();
-
-  const result: MeasuredFunctionResult<Awaited<ReturnType<T>>> = {
-    status: 'success',
-    message: 'Function executed successfully',
-    data: { value: null, duration: 0 },
-  };
+  // ({
+  //   status: 'error',
+  //   message: error instanceof Error ? error.message : 'An error occurred during function execution',
+  //   data: { value: null, duration },
+  // });
 
   try {
-    result.data.value = (await fn()) as Awaited<ReturnType<T>>;
-  } catch (error: unknown) {
-    result.status = 'error';
-    result.message = error instanceof Error ? error.message : 'An error occurred during function execution';
-  } finally {
-    const end = performance.now();
-    const duration = end - start;
+    const value = fn();
+    if (value instanceof Promise) {
+      // Use async/await inside an IIFE to avoid then/catch
+      return (async () => {
+        try {
+          const resolved = await value;
+          return {
+            status: 'success',
+            message: 'Function executed successfully',
+            data: { value: resolved, duration: performance.now() - start },
+          };
+        } catch (error: unknown) {
+          return onError(error, performance.now() - start);
+        }
+      })();
+    }
 
-    result.data.duration = duration;
+    return {
+      status: 'success',
+      message: 'Function executed successfully',
+      data: { value, duration: performance.now() - start },
+    };
+  } catch (error) {
+    return onError(error, performance.now() - start);
   }
-
-  return result;
-};
-
-export { measure, measureAsync };
+}

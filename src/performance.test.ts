@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { measure, measureAsync } from './performance';
+import { measure } from './performance';
 
 describe('measure', () => {
   it('should return success status and correct value for a simple function', () => {
@@ -16,6 +16,7 @@ describe('measure', () => {
     const errorFn = () => {
       throw new Error('Test error');
     };
+
     const result = measure(errorFn);
 
     expect(result.status).toBe('error');
@@ -28,6 +29,7 @@ describe('measure', () => {
     const errorFn = () => {
       throw 'string error';
     };
+
     const result = measure(errorFn);
 
     expect(result.status).toBe('error');
@@ -36,15 +38,17 @@ describe('measure', () => {
   });
 
   it('should measure duration for async functions (even if not awaited)', async () => {
-    const asyncFn = async () => {
+    const fn = async () => {
       let sum = 0;
+
       for (let i = 0; i < 1e5; i++) {
         sum += i;
       }
+
       return sum;
     };
 
-    const result = await measureAsync(asyncFn);
+    const result = measure(fn);
 
     expect(result.status).toBe('success');
     expect(result.data.value).toBeGreaterThan(0);
@@ -53,6 +57,7 @@ describe('measure', () => {
 
   it('should work with functions returning undefined', () => {
     const fn = () => undefined;
+
     const result = measure(fn);
 
     expect(result.status).toBe('success');
@@ -61,13 +66,15 @@ describe('measure', () => {
 
   it('should measure duration accurately', async () => {
     const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
-    const result = await measureAsync(async () => await sleep(10));
+
+    const result = await measure(async () => sleep(10));
+
     expect(result.data.duration).toBeGreaterThanOrEqual(10);
   });
 
   it('should handle functions that return a resolved Promise', async () => {
     const promiseFn = () => Promise.resolve('resolved');
-    const result = await measureAsync(promiseFn);
+    const result = await measure(promiseFn);
 
     expect(result.status).toBe('success');
     expect(result.data.value).toBe('resolved');
@@ -76,7 +83,7 @@ describe('measure', () => {
 
   it('should handle functions that return a rejected Promise', async () => {
     const promiseFn = () => Promise.reject(new Error('Promise rejected'));
-    const result = await measureAsync(promiseFn);
+    const result = await measure(promiseFn);
 
     expect(result.status).toBe('error');
     expect(result.data.value).toBeNull();
@@ -89,7 +96,7 @@ describe('measure', () => {
       throw new Error('Async error');
     };
 
-    const result = await measureAsync(asyncThrow);
+    const result = await measure(asyncThrow);
 
     expect(result.status).toBe('error');
     expect(result.data.value).toBeNull();
@@ -97,7 +104,7 @@ describe('measure', () => {
 
   it('should measure duration for a function that returns a Promise after a delay', async () => {
     const delayedPromise = () => new Promise<number>((resolve) => setTimeout(() => resolve(123), 20));
-    const result = await measureAsync(delayedPromise);
+    const result = await measure(delayedPromise);
 
     expect(result.status).toBe('success');
     expect(result.data.value).toBe(123);
