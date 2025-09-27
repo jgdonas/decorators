@@ -1,0 +1,10 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Debug Vitest",
+  "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+  "args": ["run", "--inspect-brk"],
+  "autoAttachChildProcesses": true,
+  "smartStep": true,
+  "skipFiles": ["<node_internals>/**"]
+}
