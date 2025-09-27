@@ -1,14 +1,25 @@
 name: CI
+description: >
+  Runs tests, uploads coverage, and publishes a test report for all pull requests to main or when manually triggered. Ensures code quality and provides feedback on test results and coverage in the GitHub Actions UI.
 
 on:
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+inputs:
+  ref:
+    description: 'Git ref (tag, branch, or commit hash) to check out for testing.'
+    required: false
+    default: ''
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
       - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
         with:
           version: 10.17.1
