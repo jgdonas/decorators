@@ -1,0 +1,17 @@
+coverage
+src/**/*.test.*
+*.spec.*
+*.test.*
+.husky
+.github
+.vscode
+.env*
+*.log
+src/
+tsconfig.json
+.eslintrc.*
+.prettierrc*
+commitlint.config.*
+vitest.config.*
+pnpm-lock.yaml
+node_modules
