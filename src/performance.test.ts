@@ -48,7 +48,7 @@ describe('measure', () => {
       return sum;
     };
 
-    const result = measure(fn);
+    const result = await measure(fn);
 
     expect(result.status).toBe('success');
     expect(result.data.value).toBeGreaterThan(0);
