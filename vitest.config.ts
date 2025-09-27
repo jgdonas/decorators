@@ -7,6 +7,8 @@ export default defineConfig({
     reporters: ['default', 'junit'],
     coverage: {
       reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts'],
+      exclude: ['src/index.ts', 'src/interfaces.ts'],
     },
     include: ['**/*.test.ts'],
   },
