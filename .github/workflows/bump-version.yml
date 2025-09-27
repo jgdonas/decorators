@@ -3,7 +3,7 @@ name: Bump Version on Merge
 on:
   push:
     branches:
-      - main
+      - releases
 
 jobs:
   bump-version:
