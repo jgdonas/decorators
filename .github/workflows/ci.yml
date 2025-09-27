@@ -20,4 +20,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run tests
-        run: pnpm run test
+        run: pnpm run test -- --reporter=junit --outputFile=./junit.xml
+
+      - name: Publish Test Report
+        uses: dorny/test-reporter@dc3a92680fcc15842eef52e8c4606ea7ce6bd3f3
+        if: always()
+        with:
+          name: Test Results
+          path: junit.xml
+          reporter: junit
