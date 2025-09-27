@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - name: Get branch name
         id: branch
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
