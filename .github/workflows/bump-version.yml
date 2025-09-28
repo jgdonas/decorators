@@ -39,7 +39,7 @@ jobs:
             echo "No version bump for $BRANCH_NAME"
             exit 0
           else
-          VERSION_TYPE="patch"
+            VERSION_TYPE="patch"
           fi
 
           # Bump version in package.json
