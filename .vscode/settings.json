@@ -8,5 +8,15 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "testing.alwaysRevealTestOnStateChange": true,
+  "testing.coverageToolbarEnabled": true,
+  "testing.followRunningTest": true,
+  "testing.gutterEnabled": true,
+  "testing.automaticallyOpenPeekViewDuringAutoRun": true,
+  "testing.defaultGutterClickAction": "contextMenu",
+  "testing.showAllMessages": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true
 }
