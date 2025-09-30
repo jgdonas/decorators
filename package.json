@@ -1,7 +1,7 @@
 {
-  "name": "decorators",
+  "name": "@jose.donas/decorators",
   "version": "0.1.0",
-  "description": "",
+  "description": "A TypeScript library providing reusable decorators for telemetry, caching, workers, feature flags, dependency injection, and more.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,7 +12,11 @@
     "lint": "eslint"
   },
   "type": "module",
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "decorators",
+    "functional"
+  ],
   "author": "José Antonio González Doñas <jose.gonzalez.donas@gmail.com>",
   "license": "ISC",
   "packageManager": "pnpm@10.17.1",
