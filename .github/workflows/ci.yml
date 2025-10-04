@@ -8,10 +8,7 @@ on:
     inputs:
       ref:
         description: 'Git ref (tag, branch, or commit hash) to check out for testing.'
-        required: false
-        default: ''
-    required: false
-    default: ''
+        required: true
 
 jobs:
   test:
