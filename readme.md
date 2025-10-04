@@ -65,7 +65,6 @@ Contributions are welcome! 🎉
 
 Check out [CONTRIBUTING.md](./docs/contributing.md) for more info! 💪
 
-
 ## 📜 License
 
-This project is licensed under the ISC.
+This project is licensed under ISC.
