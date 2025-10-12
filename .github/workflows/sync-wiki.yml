@@ -31,7 +31,7 @@ jobs:
           done
 
           # You can also create a Home page for the wiki from your README
-          cp README.md wiki/Home.md
+          cp readme.md wiki/Home.md
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
