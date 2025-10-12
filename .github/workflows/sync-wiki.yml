@@ -1,0 +1,42 @@
+name: Sync Docs to Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**.md'
+      - 'README.md'
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+      - name: Checkout wiki repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+        with:
+          # The wiki repository URL is the same as the main repo, with .wiki appended
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: Sync documentation files
+        run: |
+          # Copy files, renaming them for better wiki page titles if desired.
+          # The filename becomes the page title in the wiki.
+          cp docs/CONTRIBUTING.md wiki/Contributing.md
+          cp RELEASING.md wiki/Releasing-a-New-Version.md
+
+          # You can also create a Home page for the wiki from your README
+          cp README.md wiki/Home.md
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: wiki
+          commit_message: 'docs: Sync documentation from main repository'
+          file_pattern: '*.md'
+          # The default GITHUB_TOKEN has write permissions to the wiki
+          push_options: '--force-with-lease'
