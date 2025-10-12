@@ -1,0 +1,19 @@
+name: Release
+description: 'Create a new release and publish the package to npm.'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  test:
+    name: Run CI tests
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ github.ref }}
+
+  publish:
+    name: Publish to npm
+    needs: test # This ensures tests pass before publishing
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
