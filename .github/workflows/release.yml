@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     name: Run CI tests
-    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/tests.yml
     with:
       ref: ${{ github.ref }}
 
