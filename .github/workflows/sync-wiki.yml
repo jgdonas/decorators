@@ -26,8 +26,9 @@ jobs:
         run: |
           # Copy files, renaming them for better wiki page titles if desired.
           # The filename becomes the page title in the wiki.
-          cp docs/CONTRIBUTING.md wiki/Contributing.md
-          cp RELEASING.md wiki/Releasing-a-New-Version.md
+          for file in docs/*.md; do
+            cp "$file" "wiki/$(basename "$file")"
+          done
 
           # You can also create a Home page for the wiki from your README
           cp README.md wiki/Home.md
